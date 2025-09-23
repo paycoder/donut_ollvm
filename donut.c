@@ -761,6 +761,8 @@ static int build_module(PDONUT_CONFIG c) {
       }
       DPRINT("Runtime : %s", c->runtime);
       strncpy(mod->runtime, c->runtime, DONUT_MAX_NAME-1);
+      memcpy(mod->runtime2, DONUT_RUNTIME_NET2, sizeof(DONUT_RUNTIME_NET2));
+      memcpy(mod->runtime4, DONUT_RUNTIME_NET4, sizeof(DONUT_RUNTIME_NET4));
     } else
     // Unmanaged DLL? copy function name to module          
     if(mod->type == DONUT_MODULE_DLL && c->method[0] != 0) {

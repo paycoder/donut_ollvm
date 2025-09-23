@@ -252,7 +252,9 @@ typedef struct _DONUT_MODULE {
     int      thread;                          // run entrypoint of unmanaged EXE as a thread
     int      compress;                        // indicates engine used for compression
     
-    char     runtime[DONUT_MAX_NAME];         // runtime version for .NET EXE/DLL
+    char     runtime[DONUT_MAX_NAME];       // runtime version for .NET EXE/DLL
+    char     runtime2[sizeof(DONUT_RUNTIME_NET2)];   // runtime version for .NET EXE/DLL
+    char     runtime4[sizeof(DONUT_RUNTIME_NET4)];   // runtime version for .NET EXE/DLL
     char     domain[DONUT_MAX_NAME];          // domain name to use for .NET EXE/DLL
     char     cls[DONUT_MAX_NAME];             // name of class and optional namespace for .NET EXE/DLL
     char     method[DONUT_MAX_NAME];          // name of method to invoke for .NET DLL or api for unmanaged DLL
