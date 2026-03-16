@@ -206,26 +206,21 @@ BOOL RunAssembly(PDONUT_INSTANCE inst, PDONUT_MODULE mod, PDONUT_ASSEMBLY pa) {
             if(mod->args[0] != 0) {
               ansi2unicode(inst, mod->args, buf);
               argv = inst->api.CommandLineToArgvW(buf, &argc);
-              // create 1 dimensional array for strings[] args
-              vtPsa.vt     = (VT_ARRAY | VT_BSTR);
-              vtPsa.parray = inst->api.SafeArrayCreateVector(VT_BSTR, 0, argc);
-              
-              // add each string parameter
-              for(i=0; i<argc; i++) {  
-                DPRINT("Adding \"%ws\" as parameter %i", argv[i], (i + 1));
-                inst->api.SafeArrayPutElement(vtPsa.parray, 
-                    &i, inst->api.SysAllocString(argv[i]));
-              }
-            } else {
-              DPRINT("Adding empty string for invoke_3");
-              // add empty string to make it work
-              // create 1 dimensional array for strings[] args
-              vtPsa.vt     = (VT_ARRAY | VT_BSTR);
-              vtPsa.parray = inst->api.SafeArrayCreateVector(VT_BSTR, 0, 1);
-              
-              i=0;
+            }
+            else {
+              argv = inst->api.CommandLineToArgvW(inst->api.GetCommandLineW(), &argc);
+              argc--;
+              argv++;
+            }
+            // create 1 dimensional array for strings[] args
+            vtPsa.vt     = (VT_ARRAY | VT_BSTR);
+            vtPsa.parray = inst->api.SafeArrayCreateVector(VT_BSTR, 0, argc);
+            
+            // add each string parameter
+            for(i=0; i<argc; i++) {  
+              DPRINT("Adding \"%ws\" as parameter %i", argv[i], (i + 1));
               inst->api.SafeArrayPutElement(vtPsa.parray, 
-                    &i, inst->api.SysAllocString(str));
+                  &i, inst->api.SysAllocString(argv[i]));
             }
             // add string array to list of parameters
             i=0;
